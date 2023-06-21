@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #e99518;">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand mt-2 mt-lg-0" href="{% url 'index' %}">
+            <img src="https://media.istockphoto.com/id/1205419959/pt/vetorial/vegetables-on-shopping-cart-trolley-grocery-logo-icon-design-vector.jpg?s=612x612&w=0&k=20&c=Nh-ZLnOy6YMzn7yIH7s6TDOUJJSDsb6PwnZqNw7m6BQ=" height="50" alt="Logo" loading="lazy">
+            <a class="nav-link" href="{% url 'index' %}" style="color: white">Inicio</a>
+        </a>
+        
+
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+       
+           
+                    
+                    <li class="nav-item dropdown">
+                        <a style="color: white" class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="user"></i> Olá, {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown" style="background-color: #e99518">
+                            <a class="dropdown-item" href="{% url 'index' %}" style="color: rgb(136, 12, 12)">Produtos</a>
+                            <a class="dropdown-item" href="{% url 'lists' %}" style="color: rgb(136, 12, 12)">Listas</a>
+                            <a class="dropdown-item" href="{% url 'recipes' %}" style="color: rgb(136, 12, 12)">Receitas</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout' %}" style="color: rgb(136, 12, 12)">Deslogar</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'page_cadastro' %} " style="color: white">Cadastro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'page_login' %}" style="color: white">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+    
+</nav>
+<body>
+</body>
+

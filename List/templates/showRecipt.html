@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container">
+      <div class="row justify-content-between card shadow mb-4 rounded" style="background-color: #004119; margin-top: 20px;">
+        <div class="card-header" data-toggle="collapse" href="#editListCollapse">
+          <h4 class="mt-4" style="color: white">    {{recipe.name}} - Adicionar produto: <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalProduct" onclick="showModal()"><i class="fa fa-plus"></i></button><p></p></h4>
+        </div>
+    <ul>
+      {% for prod in reciptProducts %}
+        <h5 style="color: white"><li> {{prod.product.name}} - {{prod.quantity}}</li></h5>
+    {% endfor %}
+    </ul>
+
+
+
+    <div class="modal fade" id="ModalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Adicionar produto na Receita</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="/add_prod_in_recipt/{{recipe.id}}/" method="post">
+                    {% csrf_token %}
+                    <select class="form-control mb-4" name="idProd">
+                        <option selected disabled>Selecione o produto</option>
+                
+                        {% for prod in products %}
+                        <option value="{{prod.id}}">{{prod.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="name"> Quantidade:</label>
+                    <input id="quantity" type="text" name="quantity" value=""><p></p>
+                    <input type="submit" value="Submit">
+                </form>
+    
+    
+    
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock content %}

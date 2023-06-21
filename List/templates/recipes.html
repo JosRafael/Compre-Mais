@@ -1,0 +1,112 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    
+<div class="">        
+    <div class=" row justify-content-between card shadow mb-4 rounded" style="background-color: #a03d3d; height: auto; margin-top: 25px; margin-right: 50px; margin-left: 50px;" >
+            <div class="card-header" data-toggle="collapse" href="#productsCollapse">
+                <h4 style="color: white">Receitas</h4>
+            </div>
+            <div class="collapse" id="productsCollapse">
+            <ul class="mb-3">
+                {% for recipe in recipts %}
+                <li class="mb-2">
+                    <a href="{% url 'show_recipt' recipe.id %}" style="color: black;"> {{recipe.id}} - {{ recipe.name }} - {{ recipe.description }} - {{ recipt.category }}</a>
+                    <a class="btn btn-outline-danger ml-2" href="{% url 'delete_recipt' pk=recipe.id %}"style="background-color: #D3D3D3; color: black" >Excluir</a>
+                </li>
+            {% endfor %}
+        </ul>
+            </div>
+        </div>
+                   
+
+        <div class="">   
+        <div class="row justify-content-between card shadow mb-4 rounded" style="background-color: #a03d3d; margin-top: 20px; margin-right: 50px; margin-left: 50px;">
+
+          <div class="card-header" data-toggle="collapse" href="#editProductsCollapse">
+        <h4 class="mt-4" style="color:white">Editar:</h4>
+          <form action="/edit_recipt/" method="post">
+              {% csrf_token %}
+
+              <div class="mb-3">
+                  <label for="id" class="form-label" style="color:white">ID:</label>
+                  <input id="id" type="text" name="id" class="form-control" value="">
+              </div>
+
+              <div class="mb-3">
+                  <label for="name" class="form-label" style="color:white">Nome:</label>
+                  <input id="name" type="text" name="name" class="form-control" value="">
+              </div>
+
+              <div class="mb-3">
+                  <label for="description" class="form-label" style="color:white">Descrição:</label>
+                  <input id="description" type="text" name="description" class="form-control" value="">
+              </div>
+
+              <div class="mb-3">
+                  <label for="category" class="form-label" style="color:white">Categoria:</label>
+                  <select id="category" class="form-control" name="category">
+                      <option selected disabled>Selecionar Categoria</option>
+                      {% for tag in tagRecipts %}
+                        <option value="{{tag.id}}">{{tag.name}}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+
+              <button type="submit" class="btn btn-light">Salvar</button>
+          </form>
+          </div>
+        </div>
+    </div>
+    <div class="">
+        <div class=" row justify-content-between card shadow mb-4 rounded" style="background-color: #a03d3d; margin-top: 20px; margin-right: 50px; margin-left: 50px;">
+            <div class="card-header">
+              <h3 class="col" style="color: white;">Nova Receita</h3>
+            </div>
+              <button class="btn btn-light btn-sm col-auto" data-toggle="modal" data-target="#ModalRecipe" onclick="showModal()">
+                  <i class="fa fa-plus"></i>
+              </button>
+          </div>
+          <ul class="mb-3">
+    <div class="modal fade" id="ModalRecipe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nova Receita</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add_recipt/" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nome:</label>
+                            <input id="name" type="text" name="name" class="form-control" value="">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Descrição:</label>
+                            <input id="description" type="text" name="description" class="form-control" value="">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Categoria:</label>
+                            <select id="category" class="form-control" name="category">
+                                <option selected disabled>Selecionar Categoria</option>
+                                {% for tag in tagRecipts %}
+                                  <option value="{{tag.id}}">{{tag.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+{% endblock %}

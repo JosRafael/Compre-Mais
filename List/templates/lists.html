@@ -1,0 +1,87 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    
+<style>
+    a {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+</style>
+<div class="">
+      <div class="row justify-content-between card shadow mb-4 rounded" style="background-color: #5f51b4; margin-top: 20px; margin-right: 50px; margin-left: 50px;">
+        <div class="card-header" data-toggle="collapse" href="#editListCollapse">
+          <h4 class="mt-4" style="color: white">Lista de Compras</h4>
+        </div>
+
+          <ul class="mb-3">
+            {% for list in lists %}
+                <li class="mb-2" style="color: white">
+                    <a href="{% url 'show_list' pk=list.id %}" style="color: white">{{ list.id }} - {{ list.name }}</a> 
+                    <a class="btn btn-light ml-2" href="{% url 'delete_list' pk=list.id %}">Excluir</a>
+                    
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="row justify-content-between card shadow mb-4 rounded" style="background-color: #5f51b4; margin-right: 50px; margin-left: 50px;">
+            <div class="card-header" data-toggle="collapse" href="#editListCollapse">
+                <h4 class="mt-4" style="color: white">Editar Lista</h4>
+            </div>
+            <div class="collapse" id="editListCollapse">
+                <div class="card-body">
+                    <form action="/edit_list/" method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="id" class="form-label" style="color: white">ID:</label>
+                            <input id="id" type="text" name="id" class="form-control" value="">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="name" class="form-label" style="color: white">Nome:</label>
+                            <input id="name" type="text" name="name" class="form-control" value="">
+                        </div>
+
+                        <button type="submit" class="btn btn-light">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class=" row justify-content-between card shadow mb-4 rounded" style="background-color: #5f51b4; margin-top: 20px; margin-right: 50px; margin-left: 50px;">
+            <div class="card-header">
+              <h3 class="col" style="color: white;">Nova Lista</h3>
+            </div>
+              <button class="btn btn-light btn-sm col-auto" data-toggle="modal" data-target="#ModalList" onclick="showModal()">
+                  <i class="fa fa-plus"></i>
+              </button>
+          </div>
+
+    <div class="modal fade" id="ModalList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nova Lista</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add_list/" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nome:</label>
+                            <input id="name" type="text" name="name" class="form-control" value="">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
